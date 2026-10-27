@@ -1,0 +1,1 @@
+var t="buxx:email";function a(){try{const r=window.localStorage.getItem(t);if(!r)return null;const e=JSON.parse(r);return typeof e?.email=="string"&&e.email?e.email:null}catch{return null}}function n(){try{window.localStorage.removeItem(t)}catch{}}function l(r){const e=r.trim();if(e)try{window.localStorage.setItem(t,JSON.stringify({email:e}))}catch{}}export{a as n,l as r,n as t};

@@ -1,0 +1,1 @@
+import{t as a}from"./preload-helper.FRKb0__z.js";var r=new URL(window.location.href).searchParams.get("debug");(r==="performance"||r==="observe")&&a(async()=>{const{initPerformanceDebugPanel:e}=await import("./performance-debug-panel.Dsr1lZFw.js");return{initPerformanceDebugPanel:e}},[]).then(({initPerformanceDebugPanel:e})=>{e()});
