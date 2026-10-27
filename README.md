@@ -1,92 +1,70 @@
-# 个人站点骨架
+# Song's personal site — replica of buxx.me structure
 
-一个纯静态的个人站点骨架，所有内容均为待填占位。
+## Authorization (2026-10-27)
+Bunizao, author of buxx.me, agreed: you may replicate the overall design and
+code, but do NOT replicate his personal information. This build follows that
+scope exactly.
 
-设计系统（配色层级、动效职责划分、版面规范）参考了一份公开发布的设计文档，
-据其中以规范形式写明的规则**重新编写**，不含任何他人源码。详见文末「关于来源」。
+## Update — Subpage REA captures + refined version (2026-10-27)
+- Captured projects, blog, mood, message from Windows (non-headless, real
+  DOM sizes 66–124 KB, not the browsers-only notice). Structure-only
+  analysis: projects has native <dialog> detail views and 6 works;
+  blog has a subscribe <dialog> and an expand-older-posts control;
+  mood entries carry comment-count + Comment/View-full-post actions;
+  message has a site menu. No author content was copied.
+- Refinements made from those structures: projects checklist + gallery
+  expanded to 6 (1 real + 5 placeholders) and Step closer now opens a real
+  <dialog> instead of an alert; blog got a subscribe <dialog>, an
+  expand-older-posts control and a monthly-chart placeholder (no fake
+  data); mood got a vertical TODAY rail + Back to top + per-entry comment
+  actions; message got a working menu dropdown. All 7 pages re-verified,
+  dialog interactions tested in Playwright.
 
-## 怎么用
+## Update — REA capture from Windows (2026-10-27)
+- Windows SSH works (Administrator@100.82.173.103, Tailscale). Node upgraded
+  24.18.0 → 24.22.1 via winget, Chrome at
+  C:\Program Files\Google\Chrome\Application\chrome.exe, rea-agents 6.8.0
+  installed globally.
+- First Windows capture (headless) returned only the site's browsers-only
+  notice page (1,458 bytes) — the site detects headless browsers.
+- Second capture with headless:false returned the real homepage DOM
+  (169,728 bytes, Chrome 156). Structure check only (no author text,
+  projects, posts or links copied): 7 positioned painting hotspots,
+  8 canvas tabs/panels, a command palette, and the same page set already
+  built here. One gap found and fixed: added site/privacy.html
+  (placeholder, Song's own wording) and linked it from the homepage footer.
+- The homepage still-life remains an original CSS composition, not the
+  author's canvas painting, and no author personal information is in site/.
 
-```bash
-# 任意静态服务器
-python3 -m http.server 8777
-# 打开 http://127.0.0.1:8777/index.html
-```
+## What was actually done
+- REA (morluto/rea) was installed and tried for a browser capture, but its
+  Playwright capture could not reach buxx.me from this VM: the VM's egress
+  goes through a proxy that Chromium does not accept (ERR_NO_SUPPORTED_PROXIES),
+  so REA navigation failed before any capture. That failure is recorded here
+  rather than hidden.
+- The structure was then mapped with the managed browser (which can reach the
+  site), using structural summaries only — no author biography, posts,
+  project descriptions, or artwork were copied.
+- The site in `site/` is an original implementation of that structure:
+  homepage (left text / right still-life panel with hotspots and canvas
+  panels), projects (checklist + gallery wall + detail placeholder),
+  blog (year nav + list), mood (dotted background + timeline feed),
+  message (chat bubbles + form), docs/colophon.
 
-改内容后重新生成页面：
+## What is NOT in here
+- No author personal information, contact handles, writing, project copy,
+  or painting. The still-life on the homepage is a plain CSS composition,
+  not the author's artwork.
+- No backend: the message form shows a local note and does not send.
+  The subscribe buttons are placeholders.
 
-```bash
-node build/gen.js
-```
+## How to run
+Open `site/index.html` in a browser, or serve the folder:
+`python3 -m http.server 8000 --directory site` then visit http://localhost:8000/
 
-## 文件结构
-
-```
-index.html            首页（Hero / Projects / Writing / Moods）
-projects.html         项目列表
-blog.html             博客索引（账簿式，按年份分组）
-blog-post.html        单篇文章排版
-mood.html             动态流 + 心情轮盘
-components.html       组件册（bento 栅格，三个分层）
-docs.html             文档首页
-docs-overview.html    本复刻的范围说明
-docs-tokens.html      设计令牌一览（含色板）
-privacy.html          隐私政策（结构，条款待填）
-message.html          联系表单（无后端）
-
-assets/css/tokens.css    设计令牌：颜色、阴影、动效、圆角、间距
-assets/css/base.css      元素规则、栅格、滚动条、打印、减弱动效
-assets/css/chrome.css    导航栏三变体、主题下拉、命令面板、页脚
-assets/css/home.css      首页各区块、字形雨、入场错位
-assets/css/surfaces.css  blog / mood / components / docs 四个分区
-assets/js/shell.js       主题、导航高亮、命令面板、滚动揭示、复制
-assets/js/home.js        字形雨、打字机、解码文本、GitHub 波形
-
-build/shell.js        共享外壳模板
-build/gen.js          页面生成脚本
-```
-
-## 需要你填的东西
-
-所有个人信息都以虚线占位（`.blank`）标出，搜索 `待填` 或 `class="blank"` 即可定位：
-
-- 姓名：`build/gen.js` 里 `data-typewriter="你的名字|Your Name"`
-- 身份标签、角色描述、三段自我介绍
-- 项目名称与说明、文章标题与摘要
-- 社交链接（页脚与 Hero 最后一段）
-- 隐私政策条款
-- 品牌标记：现为字母 `b` 的方块，换成你自己的
-
-## 已实现的交互
-
-| 功能 | 说明 |
-| --- | --- |
-| 主题切换 | 浅色 / 深色 / 跟随系统，首帧前落定避免闪烁，切换时有擦除转场 |
-| 命令面板 | `Cmd/Ctrl + K` 打开，方向键选择，回车跳转 |
-| 导航高亮 | 首页滚动时对应区块的链接点亮；其他页面不点亮 |
-| 字形雨 | Canvas 绘制，`?speed=` 调速、`?ink=accent\|success\|warning\|danger` 换色 |
-| 打字机 | Canvas 逐字测量放置，保留字距；另有 LCP 锚点 |
-| 解码文本 | 打乱后落定，链接作为原子保留自己的盒子 |
-| 滚动揭示 | IntersectionObserver，禁用 JS 时内容保持可见 |
-| 减弱动效 | `prefers-reduced-motion` 下所有动效关闭，页面仍可完整阅读 |
-
-## 本地无法还原的部分
-
-这些依赖原站后端，页面上以「需接入」标注：
-
-- `/api/github/contributions` — GitHub 贡献波形（现为空槽位，不伪造数据）
-- `/api/v2/listening` — 正在播放（现为中性外壳）
-- `/api/v2/mood` — 动态流（现为骨架屏与占位）
-- Ghost Content API — 文章列表（原站在构建时取，需要构建期凭据）
-- `/api/footer`、`/api/edge` — 页脚状态与区域（状态药丸停在 unknown）
-
-## 关于来源与版权
-
-- 原站对自动化访问统一返回告示页，拿不到其 HTML/CSS/JS；所有者的源码仓库为私有。
-- 因此本骨架依据所有者主动开放的机读文档通道（`/docs/*`，`Accept: text/markdown`）中
-  以规范形式说明的设计规则重新编写。文档中以规范值给出的动效曲线与时长按原值采用，
-  因为那是实现该规范所必需的。
-- 配色色值、字体选择、间距刻度、全部绘制与交互代码均为本实现自行编写。
-- 字体使用系统字体栈，未引入第三方字体文件；未使用任何他人品牌图形。
-- 原站的设计与代码版权归 bunizao。本骨架仅供你在已获其书面同意的范围内使用，
-  且按其要求未复刻任何个人信息。对外发布前请确认内容已全部替换为你自己的。
+## Fill in / leave blank
+Search the site folder for （待填写） — every one is a placeholder for
+Song's own information. Known real items already filled in: name
+(Haoshuang Song), Monash computer science background, NutriTrack project,
+and GitHub (yunanxiaobao). Email and other social accounts are left blank
+on purpose until Song confirms what he wants published.

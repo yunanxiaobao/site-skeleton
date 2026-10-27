@@ -1,247 +1,42 @@
-<!doctype html>
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>首页 · 本地复刻骨架</title>
-<meta name="description" content="依据公开设计文档实现的本地复刻骨架，个人信息待填。">
-<meta name="robots" content="noindex, nofollow">
-<script>(function(){try{var s=null;try{s=localStorage.getItem('theme')}catch(e){}
-var setting=s==='light'||s==='dark'?s:'system';
-var eff=setting==='system'?(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'):setting;
-var r=document.documentElement;r.setAttribute('data-theme-setting',setting);
-if(eff==='dark')r.classList.add('dark')}catch(e){}})();</script>
-<link rel="stylesheet" href="assets/css/tokens.css">
-<link rel="stylesheet" href="assets/css/base.css">
-<link rel="stylesheet" href="assets/css/chrome.css">
-<link rel="stylesheet" href="assets/css/surfaces.css">
-<link rel="stylesheet" href="assets/css/home.css">
-</head>
-<body>
-<a class="skip-link" href="#main">跳到主要内容</a>
-<header class="site-nav" data-variant="home">
-  <div class="site-nav__inner">
-    <a class="brand" href="index.html"><span class="brand__mark">·</span><span>your-site</span></a>
-    <nav class="nav-links"><a class="nav-link" href="projects.html" data-section="projects">Projects</a><a class="nav-link" href="blog.html">Blog</a><a class="nav-link" href="mood.html">Mood</a><a class="nav-link" href="components.html">Components</a><a class="nav-link" href="docs.html">Docs</a></nav>
-    <div class="header-actions" data-header-actions>
-      <button class="icon-btn js-palette-open" type="button" aria-label="搜索站点"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
-      <div class="theme-menu" data-theme-menu data-open="false">
-        <button class="icon-btn" type="button" data-theme-toggle aria-label="切换主题"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg></button>
-        <div class="theme-menu__list" role="menu">
-          <button class="theme-menu__item" data-set="light" role="menuitem">浅色</button>
-          <button class="theme-menu__item" data-set="dark" role="menuitem">深色</button>
-          <button class="theme-menu__item" data-set="system" role="menuitem">跟随系统</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</header>
-<main id="main">
-
-<div class="glyph-track">
-  <div class="glyph-field" data-glyph-field aria-hidden="true"></div>
-  <section class="hero shell">
-    <div class="hero__status hero-animate" style="--hero-i:0">
-      <span class="hero__status-dot"></span>
-      <span data-status-words="在线|写作中|构建中|在读">在线</span>
-    </div>
-
-    <h1 class="hero__name hero-animate" style="--hero-i:1" data-typewriter="你的名字|Your Name">
-      <span class="hero-lcp-anchor">Your Name</span>
-    </h1>
-
-    <div class="hero__chips hero-animate" style="--hero-i:2">
-      <span class="chip"><span class="blank">身份一</span></span>
-      <span class="chip"><span class="blank">身份二</span></span>
-      <span class="chip"><span class="blank">身份三</span></span>
-    </div>
-
-    <p class="hero__role hero-animate" style="--hero-i:3"><span class="blank">一句话角色描述</span></p>
-
-    <div class="hero__bio hero-animate" style="--hero-i:4" data-decode>
-      <p>我做 <a href="projects.html" data-mark="underline" style="--mark-i:0">projects</a>，
-      也 <a href="blog.html" data-mark="underline" style="--mark-i:1">write</a>，
-      偶尔发一些 <a href="mood.html" data-mark="underline" style="--mark-i:2">moods</a>。</p>
-      <p>这里写你在做什么。第二段写你写些什么。第三段写你在哪里。<span class="blank">自我介绍</span></p>
-      <p>
-        <a href="message.html" data-mark="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Message me</a>
-        &nbsp;
-        <a href="#" data-mark="icon" data-blank-link><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M10 13a5 5 0 007 0l2-2a5 5 0 00-7-7l-1 1"/><path d="M14 11a5 5 0 00-7 0l-2 2a5 5 0 007 7l1-1"/></svg><span class="blank">社交链接</span></a>
-      </p>
-    </div>
-
-    <div class="hero__widgets">
-      <div class="card gh-card hero-animate" style="--hero-i:0" data-gh-card>
-        <div class="card__label">GitHub 活动</div>
-        <div class="gh-wave" data-gh-wave></div>
-        <div class="gh-total" data-gh-total></div>
-      </div>
-
-      <div class="card listening hero-animate" style="--hero-i:1">
-        <div class="listening__art"></div>
-        <div class="listening__meta">
-          <div class="listening__title">未在播放
-            <span class="eq"><i></i><i></i><i></i></span>
-          </div>
-          <div class="listening__artist"><span class="placeholder-note">需接入 /api/v2/listening</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="hero__widgets">
-      <div class="marquee hero-animate" style="--hero-i:2;flex:1">
-        <div class="marquee__track">
-          <span class="chip">技术一</span><span class="chip">技术二</span><span class="chip">技术三</span><span class="chip">技术四</span><span class="chip">技术五</span><span class="chip">技术六</span><span class="chip">技术一</span><span class="chip">技术二</span><span class="chip">技术三</span><span class="chip">技术四</span><span class="chip">技术五</span><span class="chip">技术六</span>
-        </div>
-      </div>
-    </div>
-  </section>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Haoshuang Song — Student &amp; Developer</title><link rel="stylesheet" href="style.css"></head>
+<body><header class="topbar"><span>Haoshuang Song</span><span class="controls"><button data-search-open>Search (⌘K)</button><button data-theme-set="light">Light</button><button data-theme-set="dark">Dark</button><button data-theme-set="system">System</button></span></header>
+<main class="wrap"><section class="hero"><div>
+<h1>Hi, I'm Haoshuang.</h1>
+<p class="lede">I studied <span class="mark m-blue">computer science</span> at Monash, and I like turning an idea into a <span class="mark m-yellow">working product</span>. The ones I'm most proud of are in <a href="projects.html">projects</a>.</p>
+<p>I also <a href="blog.html">write</a> from time to time, and shorter thoughts go to <a href="mood.html">moods</a>. There's usually <span class="mark m-green">something on repeat</span>, and too many tabs open on <a href="https://github.com/yunanxiaobao">GitHub</a>.</p>
+<p class="muted">Click anything in the picture — it opens. Or just <a href="message.html">leave me a note</a>.</p>
+<p class="blank">待填写：把上面这段介绍换成你自己的版本；邮箱和社交账号在页脚和搜索面板里同样留了占位。</p>
+</div><div>
+<div class="painting" aria-label="Original CSS still-life composition">
+<div class="wall"></div><div class="desk"></div>
+<div class="frame">small work</div><div class="cardid">student card<br>（待填写）</div>
+<div class="lamp"></div><div class="lampglow"></div>
+<div class="record">record</div><div class="books"></div><div class="cup"></div><div class="clock" id="paintingClock">--:--</div>
+<button class="hotspot" style="top:8%;left:12%;width:34%;height:26%" data-hotspot="projects" data-caption="Projects — the small works on the wall" aria-label="Projects"></button>
+<button class="hotspot" style="top:10%;right:10%;width:26%;height:18%" data-hotspot="about" data-caption="About me — the student card on the wall" aria-label="About me"></button>
+<button class="hotspot" style="top:4%;right:38%;width:12%;height:26%" data-lamp data-caption="The lamp — turns the page to night" aria-label="Toggle night mode"></button>
+<button class="hotspot" style="bottom:22%;left:10%;width:26%;height:26%" data-hotspot="listening" data-caption="Listening — the record" aria-label="Listening"></button>
+<button class="hotspot" style="bottom:24%;left:44%;width:20%;height:16%" data-hotspot="writing" data-caption="Writing — the stack of books" aria-label="Writing"></button>
+<button class="hotspot" style="bottom:26%;right:12%;width:14%;height:12%" data-hotspot="moods" data-caption="Moods — the cup of coffee" aria-label="Moods"></button>
+<button class="hotspot" style="bottom:10%;left:38%;width:24%;height:10%" data-hotspot="now" data-caption="Now — a laptop flip clock" aria-label="Now"></button>
 </div>
-
-<div class="shell">
-<div class="notice">
-<strong>这是一个本地复刻骨架。</strong>站点结构、版面与交互依据站点所有者公开发布的设计文档实现，
-所有个人信息（姓名、简介、项目、文章、社交链接等）均未复刻，以虚线占位标出，请填入你自己的信息。
-标注「需接入」的部分依赖原站后端接口，本地无法还原。
+<div class="caption" id="paintingCaption"><span><strong>Still life, for a personal site</strong><br><em>Original CSS composition, 2026 — not the author's painting</em></span><span><a href="docs.html">colophon</a></span></div>
+<div class="canvas" id="canvas">
+<button onclick="document.getElementById('canvas').classList.remove('active')">← Back to the painting</button>
+<p class="muted">Open on the canvas</p>
+<div class="tabs">
+<button data-panel="about" class="active">about</button><button data-panel="projects">projects</button><button data-panel="now">now</button><button data-panel="writing">writing</button><button data-panel="moods">moods</button><button data-panel="listening">listening</button><button data-panel="github">github</button><button data-panel="letter">letter</button>
 </div>
-</div>
-
-<section class="section shell" id="projects-section">
-  <div class="section__head">
-    <h2>Projects</h2>
-    <a class="section__more" href="projects.html">全部项目 →</a>
-  </div>
-  <div class="projects-deck">
-    <article class="project reveal">
-      <div class="project__kind"><span class="blank">分类</span></div>
-      <h3 class="project__name"><span class="blank">项目名 1</span></h3>
-      <p class="project__desc"><span class="blank">一两句项目说明</span></p>
-      <span class="project__link">了解更多 →</span>
-    </article>
-    <article class="project reveal">
-      <div class="project__kind"><span class="blank">分类</span></div>
-      <h3 class="project__name"><span class="blank">项目名 2</span></h3>
-      <p class="project__desc"><span class="blank">一两句项目说明</span></p>
-      <span class="project__link">了解更多 →</span>
-    </article>
-    <article class="project reveal">
-      <div class="project__kind"><span class="blank">分类</span></div>
-      <h3 class="project__name"><span class="blank">项目名 3</span></h3>
-      <p class="project__desc"><span class="blank">一两句项目说明</span></p>
-      <span class="project__link">了解更多 →</span>
-    </article>
-  </div>
-</section>
-
-<section class="section shell" id="writing-section">
-  <div class="section__head">
-    <h2>Writing</h2>
-    <a class="section__more" href="blog.html">全部文章 →</a>
-  </div>
-  <div class="post-list">
-    <a class="post-row reveal" href="blog.html">
-      <span>
-        <span class="post-row__title"><span class="blank">文章标题 1</span></span>
-        <span class="post-row__excerpt"><span class="blank">摘要</span></span>
-      </span>
-      <span class="post-row__date">YYYY-MM-DD</span>
-    </a>
-    <a class="post-row reveal" href="blog.html">
-      <span>
-        <span class="post-row__title"><span class="blank">文章标题 2</span></span>
-        <span class="post-row__excerpt"><span class="blank">摘要</span></span>
-      </span>
-      <span class="post-row__date">YYYY-MM-DD</span>
-    </a>
-    <a class="post-row reveal" href="blog.html">
-      <span>
-        <span class="post-row__title"><span class="blank">文章标题 3</span></span>
-        <span class="post-row__excerpt"><span class="blank">摘要</span></span>
-      </span>
-      <span class="post-row__date">YYYY-MM-DD</span>
-    </a>
-    <a class="post-row reveal" href="blog.html">
-      <span>
-        <span class="post-row__title"><span class="blank">文章标题 4</span></span>
-        <span class="post-row__excerpt"><span class="blank">摘要</span></span>
-      </span>
-      <span class="post-row__date">YYYY-MM-DD</span>
-    </a>
-  </div>
-  <p class="notice">原站此区块在构建时从 Ghost Content API 取文章，需要构建期凭据；本地复刻为占位。</p>
-</section>
-
-<section class="section shell" id="moods-section">
-  <div class="section__head">
-    <h2>Moods</h2>
-    <a class="section__more" href="mood.html">全部动态 →</a>
-  </div>
-  <div class="mood-preview">
-    <article class="mood-card reveal">
-      <div class="mood-card__meta"><span>YYYY-MM-DD</span><span>·</span><span><span class="blank">标签</span></span></div>
-      <div class="mood-card__body">
-        <div class="skeleton skeleton--line" style="width:92%">&nbsp;</div>
-        <div class="skeleton skeleton--line" style="width:64%">&nbsp;</div>
-      </div>
-    </article>
-    <article class="mood-card reveal">
-      <div class="mood-card__meta"><span>YYYY-MM-DD</span><span>·</span><span><span class="blank">标签</span></span></div>
-      <div class="mood-card__body">
-        <div class="skeleton skeleton--line" style="width:92%">&nbsp;</div>
-        <div class="skeleton skeleton--line" style="width:64%">&nbsp;</div>
-      </div>
-    </article>
-    <article class="mood-card reveal">
-      <div class="mood-card__meta"><span>YYYY-MM-DD</span><span>·</span><span><span class="blank">标签</span></span></div>
-      <div class="mood-card__body">
-        <div class="skeleton skeleton--line" style="width:92%">&nbsp;</div>
-        <div class="skeleton skeleton--line" style="width:64%">&nbsp;</div>
-      </div>
-    </article>
-  </div>
-  <p class="notice">原站此区块在滚动进入前约一个视口时请求 <code>/api/v2/mood?limit=5</code>；本地复刻保留骨架屏。</p>
-</section>
-
-</main>
-<footer class="site-footer">
-  <div class="shell">
-    <div class="site-footer__grid">
-      <div class="site-footer__col">
-        <h4>浏览</h4>
-        <a href="projects.html">Projects</a>
-        <a href="blog.html">Blog</a>
-        <a href="mood.html">Mood</a>
-      </div>
-      <div class="site-footer__col">
-        <h4>更多</h4>
-        <a href="components.html">Components</a>
-        <a href="docs.html">Docs</a>
-        <a href="privacy.html">Privacy</a>
-      </div>
-      <div class="site-footer__col">
-        <h4>联系</h4>
-        <a href="message.html">Message me</a>
-        <a href="#" data-blank-link>GitHub <span class="blank">待填</span></a>
-        <a href="#" data-blank-link>Telegram <span class="blank">待填</span></a>
-      </div>
-    </div>
-    <div class="site-footer__bottom">
-      <span class="status-pill" data-footer-status="unknown">
-        <span class="status-pill__dot"></span>
-        <span data-status-label>Checking</span>
-      </span>
-      <small>本地复刻示例 · 内容待填 · 原站设计与代码版权归 bunizao</small>
-    </div>
-  </div>
-</footer>
-<div class="palette" data-palette data-open="false">
-  <div class="palette__panel">
-    <input class="palette__input" data-palette-input type="text" placeholder="跳转到页面…  (Cmd/Ctrl + K)" aria-label="搜索页面">
-    <div class="palette__results" data-palette-results></div>
-  </div>
-</div>
-<script>window.__SITE_ROUTES__=[{"title":"Home","href":"index.html"},{"title":"Projects","href":"projects.html"},{"title":"Blog","href":"blog.html"},{"title":"Mood","href":"mood.html"},{"title":"Components","href":"components.html"},{"title":"Docs","href":"docs.html"},{"title":"Docs — Overview","href":"docs-overview.html"},{"title":"Docs — Design tokens","href":"docs-tokens.html"},{"title":"Privacy","href":"privacy.html"},{"title":"Message","href":"message.html"}];</script>
-<script src="assets/js/shell.js"></script>
-<script src="assets/js/home.js"></script>
-</body>
-</html>
+<div data-panel-content="about"><h2>About</h2><p>Haoshuang Song — computer science graduate, Monash. Now applying for M.Sc. programmes in Germany. <span class="blank">其余介绍待填写</span></p></div>
+<div data-panel-content="projects" style="display:none"><h2>Projects</h2><p>See the <a href="projects.html">projects page</a> — NutriTrack is listed there; the rest are placeholders for you to fill.</p></div>
+<div data-panel-content="now" style="display:none"><h2>Now</h2><p class="blank">现在在做什么，待填写（例如：准备德国硕士申请、完善 NutriTrack）。</p></div>
+<div data-panel-content="writing" style="display:none"><h2>Writing</h2><p>See the <a href="blog.html">blog page</a>.</p></div>
+<div data-panel-content="moods" style="display:none"><h2>Moods</h2><p>See the <a href="mood.html">mood page</a>.</p></div>
+<div data-panel-content="listening" style="display:none"><h2>Listening</h2><p class="blank">最近在听什么，待填写（不要填作者的歌单）。</p></div>
+<div data-panel-content="github" style="display:none"><h2>GitHub</h2><p><a href="https://github.com/yunanxiaobao">github.com/yunanxiaobao</a></p></div>
+<div data-panel-content="letter" style="display:none"><h2>Letter</h2><p><a href="message.html">Leave me a note</a>.</p></div>
+</div></div></section></main>
+<footer class="footer"><span>Contact: <a href="https://github.com/yunanxiaobao">GitHub</a> · <span class="blank" style="display:inline">邮箱待填写</span></span><span><a href="docs.html">Docs</a> · <a href="message.html">Message</a> · <a href="privacy.html">Privacy</a></span><span>© Haoshuang Song, 2026</span></footer>
+<div class="modal" id="searchModal"><div class="box"><input placeholder="Search…" autofocus><p class="muted">NAVIGATION</p><a href="index.html">Home</a><a href="projects.html">Projects</a><a href="blog.html">Blog</a><a href="mood.html">Moods</a><a href="message.html">Message</a><a href="docs.html">Docs</a><p class="muted">ACTIONS</p><a href="#" data-theme-set="light">Appearance: Light</a><a href="#" data-theme-set="dark">Appearance: Dark</a><a href="#" data-theme-set="system">Appearance: System</a><button data-search-close style="margin-top:12px">Close</button></div></div>
+<script src="site.js"></script></body></html>
