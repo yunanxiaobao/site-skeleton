@@ -1,0 +1,419 @@
+/* ==========================================================================
+   chrome.css — 共享外壳：导航栏、主题下拉、页脚
+   原创实现。导航栏三种变体（home / page / docs）、header-actions 容器、
+   主题设置与生效主题分离等结构依据所有者公开文档说明的规范。
+   ========================================================================== */
+
+@layer components {
+  /* ---------------- 导航栏 ---------------- */
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    background: hsl(var(--surface) / 0.78);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .site-nav__inner {
+    width: 100%;
+    max-width: var(--measure-page);
+    margin-inline: auto;
+    padding-inline: var(--space-5);
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    flex-shrink: 0;
+  }
+
+  .brand__mark {
+    width: 20px;
+    height: 20px;
+    border-radius: var(--radius-xs);
+    background: var(--ink);
+    color: var(--page);
+    display: grid;
+    place-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* home 变体：40px 品牌标记 */
+  .site-nav[data-variant="home"] .brand__mark {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    font-size: 17px;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+  .site-nav[data-variant="home"] .brand:hover .brand__mark {
+    transform: translateY(-2px) rotate(-4deg);
+  }
+
+  /* docs 变体：仅标记 + 面包屑，无链接 */
+  .site-nav__crumb {
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .site-nav__crumb::before {
+    content: "/";
+    margin-inline: var(--space-2);
+    color: var(--faint);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    margin-inline-start: auto;
+  }
+
+  .site-nav[data-variant="docs"] .nav-links,
+  .site-nav[data-variant="page"] .nav-links {
+    display: none;
+  }
+
+  .nav-link {
+    position: relative;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    color: var(--muted);
+    font-size: 0.925rem;
+    transition: color var(--dur-fast) var(--ease),
+      background-color var(--dur-fast) var(--ease);
+  }
+  .nav-link:hover {
+    color: var(--ink);
+    background: var(--fill);
+  }
+  /* 文档规范：仅首页的区块链接会随滚动点亮；其他页面不点亮任何链接 */
+  .nav-link[aria-current="true"] {
+    color: var(--ink);
+    font-weight: 550;
+  }
+  .nav-link[aria-current="true"]::after {
+    content: "";
+    position: absolute;
+    left: var(--space-3);
+    right: var(--space-3);
+    bottom: 4px;
+    height: 2px;
+    border-radius: var(--radius-pill);
+    background: var(--accent-ink);
+    animation: nav-indicator var(--dur-base) var(--ease-out);
+  }
+
+  @keyframes nav-indicator {
+    from {
+      transform: scaleX(0);
+      opacity: 0;
+    }
+    to {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+  }
+
+  /* ---------------- header actions ---------------- */
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    margin-inline-start: var(--space-3);
+  }
+
+  .site-nav[data-variant="home"] .nav-links + .header-actions {
+    margin-inline-start: var(--space-3);
+  }
+
+  .icon-btn {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--quill);
+    cursor: pointer;
+    transition: color var(--dur-fast) var(--ease),
+      background-color var(--dur-fast) var(--ease),
+      border-color var(--dur-fast) var(--ease);
+  }
+  .icon-btn:hover {
+    color: var(--ink);
+    background: var(--fill);
+  }
+  .icon-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* 文档规范：docs 变体不放命令面板按钮（文档页在侧栏自带搜索） */
+  .site-nav[data-variant="docs"] .js-palette-open {
+    display: none;
+  }
+
+  /* 主题下拉：data-theme-setting 持有「设置」，与「生效主题」是不同的值 */
+  .theme-menu {
+    position: relative;
+  }
+  .theme-menu__list {
+    position: absolute;
+    right: 0;
+    top: calc(100% + var(--space-2));
+    min-width: 148px;
+    padding: var(--space-1);
+    background: var(--card);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-overlay);
+    display: none;
+    z-index: 60;
+  }
+  .theme-menu[data-open="true"] .theme-menu__list {
+    display: block;
+    animation: pop-in var(--dur-base) var(--ease-out);
+  }
+  @keyframes pop-in {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .theme-menu__item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--quill);
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-align: left;
+  }
+  .theme-menu__item:hover {
+    background: var(--fill);
+    color: var(--ink);
+  }
+  html[data-theme-setting="light"] .theme-menu__item[data-set="light"],
+  html[data-theme-setting="dark"] .theme-menu__item[data-set="dark"],
+  html[data-theme-setting="system"] .theme-menu__item[data-set="system"] {
+    color: var(--accent-ink);
+    font-weight: 550;
+  }
+
+  /* 主题擦除转场：生效主题未变化或开启减弱动效时跳过 */
+  .theme-wipe {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    pointer-events: none;
+    background: var(--page);
+    opacity: 0;
+  }
+  .theme-wipe[data-run="true"] {
+    animation: theme-wipe 420ms var(--ease-out-expo);
+  }
+  @keyframes theme-wipe {
+    from {
+      opacity: 0.85;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  /* 移动端：900px 以下隐藏浮动的搜索与主题簇，但保留在 DOM 中，
+     因为主题脚本会把状态写在这里（依文档规范） */
+  @media (max-width: 900px) {
+    [data-hide-actions-mobile="true"] .header-actions {
+      visibility: hidden;
+      pointer-events: none;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .nav-links {
+      gap: 0;
+    }
+    .nav-link {
+      padding: var(--space-2);
+      font-size: 0.85rem;
+    }
+    .site-nav__inner {
+      padding-inline: var(--space-4);
+      gap: var(--space-3);
+    }
+  }
+
+  /* ---------------- 命令面板 ---------------- */
+  .palette {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: none;
+    padding-top: 12vh;
+    background: hsl(var(--foreground) / 0.3);
+    backdrop-filter: blur(3px);
+  }
+  .palette[data-open="true"] {
+    display: block;
+  }
+  .palette__panel {
+    width: min(540px, calc(100vw - 2rem));
+    margin-inline: auto;
+    background: var(--card);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sheet);
+    overflow: hidden;
+    animation: sheet-in var(--dur-slow) var(--ease-out);
+  }
+  @keyframes sheet-in {
+    from {
+      opacity: 0;
+      transform: translateY(-10px) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .palette__input {
+    width: 100%;
+    padding: var(--space-4);
+    border: 0;
+    border-bottom: 1px solid var(--hairline);
+    background: transparent;
+    font-size: 1rem;
+    outline: none;
+  }
+  .palette__results {
+    max-height: 320px;
+    overflow-y: auto;
+    padding: var(--space-1);
+  }
+  .palette__item {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+  .palette__item[data-active="true"],
+  .palette__item:hover {
+    background: var(--fill);
+  }
+  .palette__item b {
+    font-weight: 550;
+  }
+  .palette__item span {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .palette__empty {
+    padding: var(--space-4);
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  /* ---------------- 页脚 ---------------- */
+  .site-footer {
+    margin-top: var(--space-9);
+    border-top: 1px solid var(--hairline);
+    padding-block: var(--space-6) var(--space-7);
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .site-footer__grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    justify-content: space-between;
+  }
+  .site-footer__col h4 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--faint);
+    margin-bottom: var(--space-3);
+    font-weight: 600;
+  }
+  .site-footer__col a {
+    display: block;
+    padding-block: 3px;
+    color: var(--quill);
+    transition: color var(--dur-fast) var(--ease);
+  }
+  .site-footer__col a:hover {
+    color: var(--accent-ink);
+  }
+  .site-footer__bottom {
+    margin-top: var(--space-6);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--hairline);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* 状态药丸：data-footer-status 初始为 unknown，在请求应答前显示 Checking。
+     本地复刻无后端，故保持 unknown 状态并标注。 */
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 4px 10px;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-pill);
+    font-size: 0.8rem;
+    color: var(--quill);
+  }
+  .status-pill__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--faint);
+  }
+  .status-pill[data-footer-status="unknown"] .status-pill__dot {
+    background: var(--faint);
+  }
+  .status-pill[data-footer-status="ok"] .status-pill__dot {
+    background: var(--success-ink);
+  }
+
+  .placeholder-note {
+    display: inline-block;
+    padding: 2px 8px;
+    border: 1px dashed var(--hairline);
+    border-radius: var(--radius-xs);
+    color: var(--faint);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+}

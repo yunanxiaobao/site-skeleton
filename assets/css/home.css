@@ -1,0 +1,560 @@
+/* ==========================================================================
+   home.css — 首页六个区块
+   原创实现。区块顺序与职责（Hero / Listening / Projects / Writing /
+   Mood preview / Footer）、字形雨的尺寸与遮罩规则、入场错位节奏等结构
+   依据所有者公开文档说明的规范。
+   ========================================================================== */
+
+@layer components {
+  /* ---------------- 字形雨背景 ----------------
+     文档规范：宽屏 560px 高、最宽 1200px、两侧遮罩使其在视口边缘前淡出；
+     手机 320px 高、无侧遮罩。正文文字绝不位于全强度雨中。 */
+  .glyph-track {
+    position: relative;
+  }
+
+  .glyph-field {
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 560px;
+    max-width: 1200px;
+    margin-inline: auto;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 900ms var(--ease-out);
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent,
+        #000 14%,
+        #000 86%,
+        transparent
+      ),
+      linear-gradient(to bottom, #000 0%, #000 44%, hsl(0 0% 0% / 0.22) 48%,
+        transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(
+        to right,
+        transparent,
+        #000 14%,
+        #000 86%,
+        transparent
+      ),
+      linear-gradient(to bottom, #000 0%, #000 44%, hsl(0 0% 0% / 0.22) 48%,
+        transparent 100%);
+    mask-composite: intersect;
+  }
+
+  .glyph-field[data-ready="true"] {
+    opacity: 1;
+  }
+
+  .glyph-field canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  @media (max-width: 640px) {
+    .glyph-field {
+      height: 320px;
+      -webkit-mask-image: linear-gradient(
+        to bottom,
+        #000 0%,
+        #000 38%,
+        hsl(0 0% 0% / 0.3) 52%,
+        transparent 92%
+      );
+      mask-image: linear-gradient(
+        to bottom,
+        #000 0%,
+        #000 38%,
+        hsl(0 0% 0% / 0.3) 52%,
+        transparent 92%
+      );
+    }
+  }
+
+  /* ---------------- Hero ---------------- */
+  .hero {
+    position: relative;
+    z-index: 1;
+    padding-block: var(--space-8) var(--space-7);
+  }
+
+  .hero__status {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: var(--space-5);
+  }
+
+  .hero__status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--success-ink);
+  }
+  /* 文档规范：身份行落位后状态点开始脉动 */
+  .hero.is-live .hero__status-dot {
+    animation: status-pulse 2.4s var(--ease-in-out) infinite;
+  }
+  @keyframes status-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 hsl(var(--success) / 0.5);
+    }
+    50% {
+      box-shadow: 0 0 0 5px hsl(var(--success) / 0);
+    }
+  }
+
+  .hero__name {
+    position: relative;
+    font-size: clamp(2.3rem, 1.5rem + 3.4vw, 3.6rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    min-height: 1.1em;
+  }
+
+  /* 画布文字不计入 LCP，故用一个淡的锚点在首帧绘出最长的名字；
+     打字开始后由脚本移除（依文档规范） */
+  .hero-lcp-anchor {
+    position: absolute;
+    inset: 0;
+    color: var(--faint);
+    opacity: 0.25;
+    pointer-events: none;
+  }
+
+  .hero__name canvas {
+    display: block;
+    width: 100%;
+  }
+
+  .hero__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+  }
+
+  .chip {
+    padding: 3px 9px;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-pill);
+    background: var(--fill);
+    font-size: 0.8rem;
+    color: var(--quill);
+  }
+
+  .hero__role {
+    margin-top: var(--space-4);
+    color: var(--quill);
+    font-size: 1.05rem;
+  }
+
+  /* Bio：三段短散文。只有链接是亮的，其余散文保持弱化（依文档规范） */
+  .hero__bio {
+    margin-top: var(--space-5);
+    max-width: 46rem;
+    display: grid;
+    gap: var(--space-3);
+    color: var(--muted);
+    font-size: 1.02rem;
+  }
+
+  .hero__bio a {
+    color: var(--accent-ink);
+    position: relative;
+  }
+
+  /* 散文中的词链接带下划线；最后一段的链接以图标起首、不带下划线 */
+  .hero__bio a[data-mark="underline"]::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+  .hero__bio.dt-settled a[data-mark="underline"]::after {
+    transform: scaleX(1);
+    transition-delay: calc(var(--mark-i, 0) * 90ms);
+  }
+  .hero__bio a[data-mark="underline"]:hover {
+    background: var(--accent-fill);
+    border-radius: var(--radius-xs);
+  }
+
+  .hero__bio a[data-mark="icon"] {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .hero__bio a[data-mark="icon"] svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  .hero__widgets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  /* 入场：纯 CSS 过渡，按 --hero-i 错位上浮 */
+  .hero-animate {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  .hero.is-live .hero-animate {
+    opacity: 1;
+    transform: none;
+    transition: opacity var(--dur-slow) var(--ease-out-expo),
+      transform var(--dur-slow) var(--ease-out-expo);
+    transition-delay: calc(var(--hero-i, 0) * 80ms);
+  }
+  .hero.is-live .hero__widgets .hero-animate {
+    transition-delay: calc(950ms + var(--hero-i, 0) * 70ms);
+  }
+
+  /* ---------------- GitHub 活动卡 ---------------- */
+  .card {
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-lg);
+    background: var(--card);
+    padding: var(--space-4);
+    box-shadow: var(--shadow-raised);
+  }
+
+  .card__label {
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--faint);
+    font-weight: 600;
+    margin-bottom: var(--space-3);
+  }
+
+  .gh-card {
+    min-width: 230px;
+  }
+
+  /* 波形保留最近 30 天 */
+  .gh-wave {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 44px;
+  }
+  .gh-wave__bar {
+    flex: 1;
+    min-width: 2px;
+    border-radius: 1px;
+    background: var(--accent-ink);
+    opacity: 0.22;
+    height: 4px;
+    transition: height 520ms var(--ease-out-expo),
+      opacity 520ms var(--ease-out);
+    transition-delay: calc(var(--bar-i, 0) * 12ms);
+  }
+  .gh-card[data-ready="true"] .gh-wave__bar {
+    opacity: 1;
+  }
+  .gh-total {
+    margin-top: var(--space-3);
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  /* ---------------- 正在听 ----------------
+     文档规范：构建时为中性外壳，加载后注水，在屏幕上时每 45s 刷新。
+     本地复刻无 API，保持中性外壳。 */
+  .listening {
+    min-width: 230px;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .listening__art {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    background: var(--fill-strong);
+    flex-shrink: 0;
+  }
+  .listening__meta {
+    min-width: 0;
+  }
+  .listening__title {
+    font-size: 0.92rem;
+    font-weight: 550;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .listening__artist {
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .eq {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 10px;
+    margin-left: var(--space-2);
+  }
+  .eq i {
+    width: 2px;
+    background: var(--muted);
+    height: 3px;
+    animation: eq 900ms var(--ease-in-out) infinite alternate;
+  }
+  .eq i:nth-child(2) {
+    animation-delay: 150ms;
+  }
+  .eq i:nth-child(3) {
+    animation-delay: 300ms;
+  }
+  @keyframes eq {
+    to {
+      height: 10px;
+    }
+  }
+
+  /* ---------------- 技术跑马灯 ---------------- */
+  .marquee {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 8%,
+      #000 92%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 8%,
+      #000 92%,
+      transparent
+    );
+  }
+  .marquee__track {
+    display: flex;
+    gap: var(--space-3);
+    width: max-content;
+    animation: marquee 28s linear infinite;
+  }
+  .marquee:nth-of-type(even) .marquee__track {
+    animation-direction: reverse;
+    animation-duration: 34s;
+  }
+  .marquee:hover .marquee__track {
+    animation-play-state: paused;
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* ---------------- 通用区块 ---------------- */
+  .section {
+    padding-block: var(--space-7);
+    scroll-margin-top: calc(var(--nav-h) + var(--space-4));
+  }
+
+  .section__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-5);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .section__more {
+    color: var(--muted);
+    font-size: 0.9rem;
+    transition: color var(--dur-fast) var(--ease);
+  }
+  .section__more:hover {
+    color: var(--accent-ink);
+  }
+
+  /* 滚动揭示
+     只有在脚本接手后（html.js-reveal）才隐藏初始态，保证禁用 JS、
+     脚本出错或打印时内容依然可见。 */
+  .reveal {
+    opacity: 1;
+  }
+
+  html.js-reveal .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 620ms var(--ease-out-expo),
+      transform 620ms var(--ease-out-expo);
+  }
+
+  html.js-reveal .reveal.is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.js-reveal .reveal {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* ---------------- 项目 ---------------- */
+  .projects-deck {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+
+  .project {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-5);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-lg);
+    background: var(--card);
+    transition: transform var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease);
+  }
+  .project:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-overlay);
+    border-color: hsl(var(--foreground) / 0.2);
+  }
+  .project__kind {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .project__name {
+    font-size: 1.12rem;
+    font-weight: 600;
+  }
+  .project__desc {
+    color: var(--muted);
+    font-size: 0.93rem;
+  }
+  .project__link {
+    margin-top: auto;
+    padding-top: var(--space-3);
+    color: var(--accent-ink);
+    font-size: 0.86rem;
+  }
+
+  /* ---------------- 写作 ---------------- */
+  .post-list {
+    display: grid;
+    gap: 0;
+  }
+  .post-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+    padding-block: var(--space-4);
+    border-bottom: 1px solid var(--hairline);
+    transition: padding-inline-start var(--dur-base) var(--ease-out);
+  }
+  /* list-hover：悬停行缩进，其余行弱化 */
+  .post-list:hover .post-row {
+    opacity: 0.5;
+  }
+  .post-list .post-row:hover {
+    opacity: 1;
+    padding-inline-start: var(--space-3);
+  }
+  .post-row__title {
+    font-size: 1.04rem;
+    font-weight: 550;
+  }
+  .post-row__date {
+    margin-inline-start: auto;
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--faint);
+  }
+  .post-row__excerpt {
+    display: block;
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-top: 3px;
+  }
+
+  /* ---------------- 心情预览 L0 ---------------- */
+  .mood-preview {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .mood-card {
+    padding: var(--space-4);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-lg);
+    background: var(--card);
+  }
+  .mood-card__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--faint);
+    margin-bottom: var(--space-2);
+  }
+  .mood-card__body {
+    color: var(--quill);
+    font-size: 0.96rem;
+  }
+
+  /* 骨架屏：构建时为骨架，滚动进入前约一个视口时抓取 */
+  .skeleton {
+    border-radius: var(--radius-xs);
+    background: linear-gradient(
+      90deg,
+      var(--fill) 25%,
+      var(--fill-strong) 37%,
+      var(--fill) 63%
+    );
+    background-size: 400% 100%;
+    animation: shimmer 1.5s var(--ease-in-out) infinite;
+    color: transparent;
+  }
+  @keyframes shimmer {
+    from {
+      background-position: 100% 0;
+    }
+    to {
+      background-position: 0 0;
+    }
+  }
+  .skeleton--line {
+    height: 0.8em;
+    margin-block: 5px;
+  }
+}

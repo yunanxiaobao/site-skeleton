@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mood · 本地复刻骨架</title>
+<meta name="description" content="">
+<meta name="robots" content="noindex, nofollow">
+<script>(function(){try{var s=null;try{s=localStorage.getItem('theme')}catch(e){}
+var setting=s==='light'||s==='dark'?s:'system';
+var eff=setting==='system'?(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'):setting;
+var r=document.documentElement;r.setAttribute('data-theme-setting',setting);
+if(eff==='dark')r.classList.add('dark')}catch(e){}})();</script>
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/chrome.css">
+<link rel="stylesheet" href="assets/css/surfaces.css">
+
+</head>
+<body data-hide-actions-mobile="true">
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="site-nav" data-variant="page">
+  <div class="site-nav__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">b</span><span>buxx.me</span></a><span class="site-nav__crumb">Mood</span>
+    
+    <div class="header-actions" data-header-actions>
+      <button class="icon-btn js-palette-open" type="button" aria-label="搜索站点"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+      <div class="theme-menu" data-theme-menu data-open="false">
+        <button class="icon-btn" type="button" data-theme-toggle aria-label="切换主题"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg></button>
+        <div class="theme-menu__list" role="menu">
+          <button class="theme-menu__item" data-set="light" role="menuitem">浅色</button>
+          <button class="theme-menu__item" data-set="dark" role="menuitem">深色</button>
+          <button class="theme-menu__item" data-set="system" role="menuitem">跟随系统</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<main id="main">
+
+<div class="shell">
+  <div class="page-head">
+    <h1>Mood</h1>
+    <p class="page-head__lede">短帖、照片与链接的流水。<span class="blank">导语</span></p>
+  </div>
+
+  <div class="mood-wheel">
+    <button type="button" aria-label="心情"></button><button type="button" aria-label="心情"></button><button type="button" aria-label="心情"></button><button type="button" aria-label="心情"></button><button type="button" aria-label="心情"></button><button type="button" aria-label="心情"></button><button type="button" aria-label="心情"></button>
+  </div>
+
+  <div class="mood-feed">
+    <article class="mood-item reveal">
+      <div class="mood-item__head">
+        <div class="mood-item__avatar"></div>
+        <div>
+          <div class="mood-item__who"><span class="blank">昵称</span></div>
+          <div class="mood-item__when">YYYY-MM-DD HH:mm</div>
+        </div>
+      </div>
+      <div class="mood-item__body"><span class="blank">这条动态的内容</span></div>
+      <div class="mood-item__actions">
+        <button class="mood-action" type="button" data-like data-liked="false">♥ <span data-like-count>0</span></button>
+        <span class="mood-action">💬 0</span>
+        <span class="mood-action">↗ 分享</span>
+      </div>
+    </article>
+    <article class="mood-item reveal">
+      <div class="mood-item__head">
+        <div class="mood-item__avatar"></div>
+        <div>
+          <div class="mood-item__who"><span class="blank">昵称</span></div>
+          <div class="mood-item__when">YYYY-MM-DD HH:mm</div>
+        </div>
+      </div>
+      <div class="mood-item__body"><span class="blank">这条动态的内容</span></div>
+      <div class="mood-item__actions">
+        <button class="mood-action" type="button" data-like data-liked="false">♥ <span data-like-count>0</span></button>
+        <span class="mood-action">💬 0</span>
+        <span class="mood-action">↗ 分享</span>
+      </div>
+    </article>
+    <article class="mood-item reveal">
+      <div class="mood-item__head">
+        <div class="mood-item__avatar"></div>
+        <div>
+          <div class="mood-item__who"><span class="blank">昵称</span></div>
+          <div class="mood-item__when">YYYY-MM-DD HH:mm</div>
+        </div>
+      </div>
+      <div class="mood-item__body"><span class="blank">这条动态的内容</span></div>
+      <div class="mood-item__actions">
+        <button class="mood-action" type="button" data-like data-liked="false">♥ <span data-like-count>0</span></button>
+        <span class="mood-action">💬 0</span>
+        <span class="mood-action">↗ 分享</span>
+      </div>
+    </article>
+    <article class="mood-item reveal">
+      <div class="mood-item__head">
+        <div class="mood-item__avatar"></div>
+        <div>
+          <div class="mood-item__who"><span class="blank">昵称</span></div>
+          <div class="mood-item__when">YYYY-MM-DD HH:mm</div>
+        </div>
+      </div>
+      <div class="mood-item__body"><span class="blank">这条动态的内容</span></div>
+      <div class="mood-item__actions">
+        <button class="mood-action" type="button" data-like data-liked="false">♥ <span data-like-count>0</span></button>
+        <span class="mood-action">💬 0</span>
+        <span class="mood-action">↗ 分享</span>
+      </div>
+    </article>
+  </div>
+
+  <p class="notice">原站动态由 Telegram 镜像进结构化归档，经 <code>/api/v2/mood</code> 读取，评论走实时镜像；本地复刻为占位，互动仅前端演示。</p>
+</div>
+
+</main>
+<footer class="site-footer">
+  <div class="shell">
+    <div class="site-footer__grid">
+      <div class="site-footer__col">
+        <h4>浏览</h4>
+        <a href="projects.html">Projects</a>
+        <a href="blog.html">Blog</a>
+        <a href="mood.html">Mood</a>
+      </div>
+      <div class="site-footer__col">
+        <h4>更多</h4>
+        <a href="components.html">Components</a>
+        <a href="docs.html">Docs</a>
+        <a href="privacy.html">Privacy</a>
+      </div>
+      <div class="site-footer__col">
+        <h4>联系</h4>
+        <a href="message.html">Message me</a>
+        <a href="#" data-blank-link>GitHub <span class="blank">待填</span></a>
+        <a href="#" data-blank-link>Telegram <span class="blank">待填</span></a>
+      </div>
+    </div>
+    <div class="site-footer__bottom">
+      <span class="status-pill" data-footer-status="unknown">
+        <span class="status-pill__dot"></span>
+        <span data-status-label>Checking</span>
+      </span>
+      <small>本地复刻示例 · 内容待填 · 原站设计与代码版权归 bunizao</small>
+    </div>
+  </div>
+</footer>
+<div class="palette" data-palette data-open="false">
+  <div class="palette__panel">
+    <input class="palette__input" data-palette-input type="text" placeholder="跳转到页面…  (Cmd/Ctrl + K)" aria-label="搜索页面">
+    <div class="palette__results" data-palette-results></div>
+  </div>
+</div>
+<script>window.__SITE_ROUTES__=[{"title":"Home","href":"index.html"},{"title":"Projects","href":"projects.html"},{"title":"Blog","href":"blog.html"},{"title":"Mood","href":"mood.html"},{"title":"Components","href":"components.html"},{"title":"Docs","href":"docs.html"},{"title":"Docs — Overview","href":"docs-overview.html"},{"title":"Docs — Design tokens","href":"docs-tokens.html"},{"title":"Privacy","href":"privacy.html"},{"title":"Message","href":"message.html"}];</script>
+<script src="assets/js/shell.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,145 @@
+/* ==========================================================================
+   tokens.css — 设计令牌层
+   --------------------------------------------------------------------------
+   本文件为原创实现。令牌的「命名与职责划分」依据站点所有者 Bunizao 公开发布
+   的设计文档（buxx.me/docs/surfaces/tokens 与 /docs/surfaces/layout，经其
+   自有的 Accept: text/markdown 通道取得）中以规范形式说明的部分：
+     - 单一中性色阶服务所有表面，层级由前景色透出的比例决定，故深色模式无需
+       第二套色阶；
+     - 阴影按「职责」而非尺寸划分；
+     - 动效令牌按职责命名，而非按曲线形状；
+     - 嵌套形状保持同心：内圆角 = 外圆角 − 间距。
+   文档中以规范值形式给出的动效曲线与时长（--ease 等）按原值采用，此类数值
+   为实现该规范所必需。配色具体色值、字体选择与间距刻度为本实现自行设定，
+   未复制原站样式表。
+   ========================================================================== */
+
+@layer properties, theme, reset, tokens, base, components, utilities;
+
+@layer tokens {
+  :root {
+    /* ---- 字体 ------------------------------------------------------------
+       原站使用 Inter 作正文、楷体作中文装饰锁定。此处改用系统字体栈，
+       避免引入第三方字体文件，离线可用。 */
+    --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+      "Helvetica Neue", "PingFang SC", "Hiragino Sans GB",
+      "Microsoft YaHei", sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+      "Liberation Mono", monospace;
+    --font-serif: ui-serif, Georgia, "Songti SC", "Noto Serif CJK SC", serif;
+
+    /* ---- 中性色阶 --------------------------------------------------------
+       单一前景 HSL 三元组，所有中性色均为其 alpha 派生。遵循文档所述
+       「层级来自前景透出多少」，因此深色模式只需翻转下方两个三元组。 */
+    --surface: 0 0% 100%;
+    --foreground: 220 14% 8%;
+
+    --ink: hsl(var(--foreground) / 0.92); /* 主文本 */
+    --quill: hsl(var(--foreground) / 0.72); /* 次级文本 */
+    --muted: hsl(var(--foreground) / 0.52); /* 弱化文本、元信息 */
+    --faint: hsl(var(--foreground) / 0.34); /* 占位、禁用 */
+    --hairline: hsl(var(--foreground) / 0.12); /* 发丝线、分隔 */
+    --fill: hsl(var(--foreground) / 0.05); /* 填充底 */
+    --fill-strong: hsl(var(--foreground) / 0.09);
+
+    --page: hsl(var(--surface));
+    --card: hsl(var(--surface));
+
+    /* ---- 四个色相 --------------------------------------------------------
+       文档规范：四个色相是中性色阶之外唯一的彩度来源，每个只对应一类时刻；
+       warning 绝不作装饰，danger 绝不用于「仅仅重要」的东西。 */
+    --accent: 221 83% 53%; /* 链接、焦点、进行中 */
+    --success: 158 64% 38%; /* 已完成、在线 */
+    --warning: 32 90% 44%; /* 需要注意，非装饰 */
+    --danger: 0 72% 48%; /* 破坏性，非「重要」 */
+
+    --accent-ink: hsl(var(--accent));
+    --accent-fill: hsl(var(--accent) / 0.1);
+    --success-ink: hsl(var(--success));
+    --warning-ink: hsl(var(--warning));
+    --danger-ink: hsl(var(--danger));
+
+    /* ---- 阴影：按职责命名 ------------------------------------------------ */
+    --shadow-raised: 0 1px 2px hsl(var(--foreground) / 0.06),
+      0 1px 3px hsl(var(--foreground) / 0.04);
+    --shadow-overlay: 0 4px 12px hsl(var(--foreground) / 0.08),
+      0 2px 4px hsl(var(--foreground) / 0.04);
+    --shadow-sheet: 0 12px 32px hsl(var(--foreground) / 0.12),
+      0 2px 8px hsl(var(--foreground) / 0.06);
+
+    /* ---- 动效令牌 --------------------------------------------------------
+       曲线与时长按文档给出的规范值采用；命名对应职责。 */
+    --ease: cubic-bezier(0.2, 0, 0, 1); /* 原地变化：开关、旋转、变色 */
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1); /* 到达、响应输入 */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1); /* 连续性：视图转场 */
+    --ease-in: cubic-bezier(0.4, 0, 1, 1); /* 退出 */
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* 循环、往复 */
+    --spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* 唯一的过冲：确认动作 */
+
+    --dur-fast: 150ms; /* 悬停、焦点、变色 */
+    --dur-base: 200ms; /* 开关与小位移 */
+    --dur-slow: 300ms; /* 面板、入场：唯一允许舒展的一档 */
+
+    /* ---- 圆角：嵌套同心 -------------------------------------------------- */
+    --radius: 0.625rem;
+    --radius-xs: 0.25rem;
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: var(--radius);
+    --radius-xl: 1rem;
+    --radius-pill: 999px;
+
+    /* ---- 间距刻度 -------------------------------------------------------- */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+    --space-8: 4rem;
+    --space-9: 6rem;
+
+    /* ---- 版面 ------------------------------------------------------------
+       文档规范：博客为单一 720px 阅读栏；首页栅格对齐 24px 格。 */
+    --measure-read: 720px;
+    --measure-page: 1120px;
+    --lattice: 24px;
+    --nav-h: 56px;
+  }
+
+  html.dark {
+    --surface: 220 16% 7%;
+    --foreground: 210 20% 98%;
+
+    /* 深色模式下会消失的阴影改为发丝线，依文档规范 */
+    --shadow-raised: 0 0 0 1px hsl(var(--foreground) / 0.08);
+    --shadow-overlay: 0 0 0 1px hsl(var(--foreground) / 0.1),
+      0 4px 12px hsl(0 0% 0% / 0.5);
+    --shadow-sheet: 0 0 0 1px hsl(var(--foreground) / 0.12),
+      0 12px 32px hsl(0 0% 0% / 0.6);
+
+    --accent: 213 94% 68%;
+    --success: 158 58% 52%;
+    --warning: 38 92% 58%;
+    --danger: 0 84% 65%;
+  }
+
+  /* 博客分区：自有出版物色板，一套蓝墨三深度，作用域限定在 .blog-zone 内，
+     依文档「不得泄漏到其他路由」的规范。 */
+  .blog-zone {
+    --dai: 215 28% 42%; /* 黛 — 主：链接、目录进度、焦点环 */
+    --dian: 220 40% 26%; /* 靛 — 署名标记 */
+    --ji: 205 70% 72%; /* 霁 — 仅作填充，对比度不足以作文本 */
+
+    --blog-link: hsl(var(--dai));
+    --blog-mark: hsl(var(--dian));
+    --blog-wash: hsl(var(--ji) / 0.28);
+  }
+
+  html.dark .blog-zone {
+    --dai: 213 60% 70%;
+    --dian: 215 50% 78%;
+    --ji: 205 65% 60%;
+  }
+}
