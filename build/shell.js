@@ -2,6 +2,11 @@
    导航栏变体、header-actions 容器、首帧前落定主题的内联脚本等结构
    依据站点所有者公开文档说明的规范，代码为原创实现。 */
 
+/* 品牌：改成你自己的站名与标记。
+   这里刻意不使用原站的域名或标识，站点所有者要求不复刻其个人信息。 */
+const BRAND_NAME = "your-site";
+const BRAND_MARK = "·";
+
 const NAV = [
   { href: "projects.html", label: "Projects", section: "projects" },
   { href: "blog.html", label: "Blog" },
@@ -55,8 +60,8 @@ function nav(variant, crumb) {
 
   const brand =
     variant === "docs"
-      ? `<a class="brand" href="index.html"><span class="brand__mark">b</span></a><span class="site-nav__crumb">Docs</span>`
-      : `<a class="brand" href="index.html"><span class="brand__mark">b</span><span>buxx.me</span></a>${
+      ? `<a class="brand" href="index.html"><span class="brand__mark">${BRAND_MARK}</span></a><span class="site-nav__crumb">Docs</span>`
+      : `<a class="brand" href="index.html"><span class="brand__mark">${BRAND_MARK}</span><span>${BRAND_NAME}</span></a>${
           crumb ? `<span class="site-nav__crumb">${crumb}</span>` : ""
         }`;
 

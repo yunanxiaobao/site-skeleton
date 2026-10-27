@@ -2,7 +2,7 @@
    tokens.css — 设计令牌层
    --------------------------------------------------------------------------
    本文件为原创实现。令牌的「命名与职责划分」依据站点所有者 Bunizao 公开发布
-   的设计文档（buxx.me/docs/surfaces/tokens 与 /docs/surfaces/layout，经其
+   的设计文档（其 /docs/surfaces/tokens 与 /docs/surfaces/layout，经其
    自有的 Accept: text/markdown 通道取得）中以规范形式说明的部分：
      - 单一中性色阶服务所有表面，层级由前景色透出的比例决定，故深色模式无需
        第二套色阶；
