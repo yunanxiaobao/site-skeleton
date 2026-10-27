@@ -1,0 +1,1 @@
+var o="data-page-scroller",r="--page-scroll";function c(e=document){const t=e.querySelector(`[${o}]`);return t?{el:t,events:t,timeline:r}:{el:e.documentElement,events:window,timeline:"scroll(root block)"}}function l(e,t=document){const n=`[${o}]`;return e instanceof Element&&e.isConnected?e.closest(n):t.querySelector(n)}export{c as n,l as t};

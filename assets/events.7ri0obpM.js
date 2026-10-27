@@ -1,0 +1,1 @@
+function e(t,n,i=!1){document.dispatchEvent(new CustomEvent("analytics:metric",{detail:{metric:t,value:n,add:i}}))}function a(t,n={}){document.dispatchEvent(new CustomEvent("analytics:click",{detail:{name:t,kind:"button",href:"",region:"",label:"",position:-1,tMs:0,...n}}))}export{e as n,a as t};
